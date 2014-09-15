@@ -7,7 +7,7 @@ use yii\web\JqueryAsset;
 
 class DateTimePickerAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = 'bloody-hell/xdan-datetimepicker';
+    public $sourcePath = '@vendor/bloody-hell/xdan-datetimepicker';
 
     public $js = [
         'jquery.datetimepicker.js',
