@@ -11,6 +11,18 @@ class DateTimePicker extends \yii\widgets\InputWidget
 
     public $language;
 
+    public $formatDate = 'Y/m/d';
+
+    public $format = 'Y/m/d H:i';
+
+    public $step = 60;
+
+    public $yearStart = 1950;
+
+    public $yearEnd = 2050;
+
+    public $dayOfWeekStart = 0;
+
     public function init()
     {
         parent::init();
@@ -21,7 +33,15 @@ class DateTimePicker extends \yii\widgets\InputWidget
 
         $this->options['id'] = $this->getId();
 
-        $this->clientOptions['lang'] = $this->language ? : \Yii::$app->language;
+        $this->clientOptions = array_merge([
+            'lang'            => $this->language ? : \Yii::$app->language,
+            'format'          => $this->format,
+            'formatDate'      => $this->formatDate,
+            'step'            => $this->step,
+            'yearStart'       => $this->yearStart,
+            'yearEnd'         => $this->yearEnd,
+            'dayOfWeekStart'  => $this->dayOfWeekStart,
+        ], $this->clientOptions);
     }
 
 
