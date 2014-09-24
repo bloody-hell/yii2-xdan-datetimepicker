@@ -23,6 +23,12 @@ class DateTimePicker extends \yii\widgets\InputWidget
 
     public $dayOfWeekStart = 0;
 
+    public $datePicker = true;
+
+    public $timePicker = true;
+
+    public $renderIcon = '<a href="" class="glyphicon glyphicon-calendar"></a>';
+
     public function init()
     {
         parent::init();
@@ -41,6 +47,8 @@ class DateTimePicker extends \yii\widgets\InputWidget
             'yearStart'       => $this->yearStart,
             'yearEnd'         => $this->yearEnd,
             'dayOfWeekStart'  => $this->dayOfWeekStart,
+            'datepicker'      => boolval($this->datePicker),
+            'timepicker'      => boolval($this->timePicker),
         ], $this->clientOptions);
     }
 
@@ -57,7 +65,16 @@ class DateTimePicker extends \yii\widgets\InputWidget
             echo Html::textInput($this->name, $this->value, $this->options);
         }
 
-        $this->view->registerJs('jQuery(\'#'.$this->getId().'\').datetimepicker('.Json::encode($this->getClientOptions()).');');
+        if($this->renderIcon){
+            echo $this->renderIcon;
+        }
+        $js = 'jQuery(\'#'.$this->getId().'\').datetimepicker('.Json::encode($this->getClientOptions()).');';
+
+        if($this->renderIcon){
+            $js .= 'jQuery(\'#'.$this->getId().'\').next().on(\'click\', function(){jQuery(\'#'.$this->getId().'\').datetimepicker(\'show\'); return false;});';
+        }
+
+        $this->view->registerJs($js);
     }
 
 
