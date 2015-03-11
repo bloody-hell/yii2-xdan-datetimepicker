@@ -4,6 +4,7 @@ namespace bloody_hell\yii2_xdan_datetimepicker;
 
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
 
 class DateTimePicker extends \yii\widgets\InputWidget
@@ -65,6 +66,11 @@ class DateTimePicker extends \yii\widgets\InputWidget
             'dayOfWeekStart'  => $this->dayOfWeekStart,
             'datepicker'      => boolval($this->datePicker),
             'timepicker'      => boolval($this->timePicker),
+            'onShow'          => new JsExpression('function(current_time,$input){
+                if($input.attr(\'disabled\') || $input.attr(\'readonly\')){
+                    return false;
+                }
+            }'),
         ], $this->clientOptions);
     }
 
@@ -104,7 +110,7 @@ class DateTimePicker extends \yii\widgets\InputWidget
         if($this->renderIcon){
             $js .= 'jQuery(\'#'.$this->getId().'\').next().on(\'click\', function(){
     var $input = jQuery(\'#'.$this->getId().'\');
-    if(!$input.attr(\'disabled\')){
+    if(!$input.attr(\'disabled\') && !$input.attr(\'readonly\')){
         $input.datetimepicker(\'show\');
     }
     return false;
