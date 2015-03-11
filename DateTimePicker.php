@@ -102,7 +102,13 @@ class DateTimePicker extends \yii\widgets\InputWidget
         $js = 'jQuery(\'#'.$this->getId().'\').datetimepicker('.Json::encode($this->getClientOptions()).');';
 
         if($this->renderIcon){
-            $js .= 'jQuery(\'#'.$this->getId().'\').next().on(\'click\', function(){jQuery(\'#'.$this->getId().'\').datetimepicker(\'show\'); return false;});';
+            $js .= 'jQuery(\'#'.$this->getId().'\').next().on(\'click\', function(){
+    var $input = jQuery(\'#'.$this->getId().'\');
+    if(!$input.attr(\'disabled\')){
+        $input.datetimepicker(\'show\');
+    }
+    return false;
+});';
         }
 
         $this->view->registerJs($js);
